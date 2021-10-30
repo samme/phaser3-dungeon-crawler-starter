@@ -3,6 +3,8 @@ import Phaser from 'phaser'
 import Preloader from './scenes/Preloader'
 import Game from './scenes/Game'
 import GameUI from './scenes/GameUI'
+// @ts-ignore
+import DebugBodyColorsPlugin from 'phaser-plugin-debug-body-colors'
 
 export default new Phaser.Game({
 	type: Phaser.AUTO,
@@ -12,11 +14,20 @@ export default new Phaser.Game({
 		default: 'arcade',
 		arcade: {
 			gravity: { y: 0 },
-			debug: false
+			debug: true
 		}
 	},
 	scene: [Preloader, Game, GameUI],
 	scale: {
 		zoom: 2
-	}
+	},
+	plugins: {
+    scene: [
+      {
+        key: 'DebugBodyColorsPlugin',
+        plugin: DebugBodyColorsPlugin,
+        mapping: 'debugBodyColors'
+      }
+    ]
+  }
 })
