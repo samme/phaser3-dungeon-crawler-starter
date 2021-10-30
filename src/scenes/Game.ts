@@ -84,35 +84,36 @@ export default class Game extends Phaser.Scene
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.lizards, wallsLayer)
 
+		// @ts-ignore
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
+		// @ts-ignore
 		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
+		// @ts-ignore
 		this.physics.add.collider(this.knives, this.lizards, this.handleKnifeLizardCollision, undefined, this)
 
+		// @ts-ignore
 		this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
 	}
 
-	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
+	private handlePlayerChestCollision(player: Faune, chest: Chest)
 	{
-		const chest = obj2 as Chest
-		this.faune.setChest(chest)
+		this.faune.setChest(chest as Chest)
 	}
 
-	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
+	private handleKnifeWallCollision(knife: Phaser.Physics.Arcade.Image)
 	{
-		this.knives.killAndHide(obj1)
+		knife.disableBody(true, true)
 	}
 
-	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
+	private handleKnifeLizardCollision(knife: Phaser.Physics.Arcade.Image, lizard: Lizard)
 	{
-		this.knives.killAndHide(obj1)
-		this.lizards.killAndHide(obj2)
+		knife.disableBody(true, true);
+		lizard.disableBody(true, true)
 	}
 
-	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
-		const lizard = obj2 as Lizard
-		
+	private handlePlayerLizardCollision(player: Faune, lizard: Lizard)
+	{				
 		const dx = this.faune.x - lizard.x
 		const dy = this.faune.y - lizard.y
 
