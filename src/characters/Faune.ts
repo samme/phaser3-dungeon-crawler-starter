@@ -98,6 +98,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		{
 			return
 		}
+		knife.enableBody(true, this.x, this.y, true, true)
 
 		const parts = this.anims.currentAnim.key.split('-')
 		const direction = parts[2]
